@@ -1,5 +1,7 @@
 # JCO Swings Trend Multi TF (cTrader)
 
+![JCO Swings Trend Multi TF](screenshot.png)
+
 A cTrader/cAlgo indicator that detects swing highs/lows on up to 4 configurable timeframes and determines trend direction based on swing structure.
 
 Based on the [TradingView version](https://github.com/jcornierfra/TradingView_Indicator_JCO_Swings_Trend_Multi_TF) (Pine Script v6) and the cTrader single-TF version [JCO Swings Trend HTF](https://github.com/jcornierfra/cTrader_Indicator_JCO_Swings_Trend_HTF).
