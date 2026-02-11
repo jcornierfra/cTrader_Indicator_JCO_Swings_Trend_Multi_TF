@@ -38,6 +38,7 @@ Alternatively, open the `.sln` file in Visual Studio or the cTrader code editor.
 | Icon Gap (%) | 2.0 | Distance between swing icon and price level (% of chart height) |
 | Display Dashboard | true | Show/hide the multi-line dashboard |
 | Display Expansion | true | Show/hide expansion in dashboard |
+| Pip Value | 0.1 | Pip size for expansion calculation (see table below) |
 | Dashboard Font Size | 10 | Font size for dashboard text (6-20) |
 | Enable Print | false | Enable debug logging to cTrader log |
 
@@ -150,9 +151,18 @@ Liquidity sweep is the **union** of:
 
 Measures the distance between the most recent swing high and swing low in pips:
 
+```text
+Expansion = (SwingHigh[0] - SwingLow[0]) / PipValue
 ```
-Expansion = (SwingHigh[0] - SwingLow[0]) / PipSize
-```
+
+The `Pip Value` parameter allows custom pip size per instrument:
+
+| Instrument | Pip Value | Example |
+| ---------- | --------- | ------- |
+| Gold (XAU/USD) | 0.1 | Move of $10 = 100 pips |
+| Forex (EUR/USD, GBP/USD...) | 0.0001 | Move of 0.0050 = 50 pips |
+| Forex JPY pairs (USD/JPY...) | 0.01 | Move of 0.50 = 50 pips |
+| Indices (US30, NAS100...) | 1.0 | Move of 100 pts = 100 pips |
 
 Display can be toggled on/off. Values are dynamically padded for dashboard alignment.
 
@@ -216,6 +226,12 @@ All detection methods (`DetectSwings`, `CalculateSwingsTrend`, `CalculateCHoCH`,
 | Font size | Not configurable | Configurable parameter |
 
 ## Changelog
+
+### v2.1 - 2026-02-11
+
+- Added `Pip Value` parameter (default 0.1) for custom expansion calculation
+- Replaces `Symbol.PipSize` for more accurate pip display across instruments
+- Recommended values shown in parameter label: Gold 0.1, Forex 0.0001, JPY 0.01, Indices 1.0
 
 ### v2.0 - 2026-02-10
 - Multi-timeframe support: 4 TFs (1 primary + 3 optional secondary)

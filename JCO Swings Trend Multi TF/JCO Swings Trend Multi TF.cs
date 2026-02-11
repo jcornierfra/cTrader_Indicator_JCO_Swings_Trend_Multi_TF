@@ -1,8 +1,8 @@
 // =====================================================
 // JCO Swings Trend Multi TF Indicator
 // =====================================================
-// Version: 2.0
-// Date: 2026-02-10
+// Version: 2.1
+// Date: 2026-02-11
 // Author: Jerome Cornier
 //
 // Description:
@@ -21,6 +21,12 @@
 // - TradingView JCO Swings Trend Multi TF v2.2 (multi TF)
 //
 // Changelog:
+// v2.1 (2026-02-11)
+//   - Added Pip Value parameter (default 0.1) for custom expansion calculation
+//     * Replaces Symbol.PipSize for more accurate pip display
+//     * Recommended values: Gold: 0.1, Forex: 0.0001, JPY pairs: 0.01, Indices: 1.0
+//   - Parameter label includes recommended values for quick reference
+//
 // v2.0 (2026-02-10)
 //   - Multi-timeframe support: 4 TFs (1 primary + 3 optional secondary)
 //   - TFState class encapsulating per-TF state for clean multi-TF processing
@@ -70,6 +76,9 @@ namespace cAlgo.Indicators
 
         [Parameter("Display Expansion", DefaultValue = true, Group = "General")]
         public bool DisplayExpansion { get; set; }
+
+        [Parameter("Pip Value (Gold:0.1 Forex:0.0001 JPY:0.01 Indices:1.0)", DefaultValue = 0.1, Group = "General")]
+        public double PipValue { get; set; }
 
         [Parameter("Dashboard Font Size", DefaultValue = 10, MinValue = 6, MaxValue = 20, Group = "General")]
         public int DashboardFontSize { get; set; }
@@ -850,7 +859,7 @@ namespace cAlgo.Indicators
                     var tf = _tfStates[i];
                     if (tf.Active && tf.SwingHighCount > 0 && tf.SwingLowCount > 0)
                     {
-                        double expansion = (tf.SwingHighPrices[0].SwingPrice - tf.SwingLowPrices[0].SwingPrice) / Symbol.PipSize;
+                        double expansion = (tf.SwingHighPrices[0].SwingPrice - tf.SwingLowPrices[0].SwingPrice) / PipValue;
                         expansionStrings[i] = expansion.ToString("F1");
                     }
                     else
